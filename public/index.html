@@ -236,8 +236,161 @@
   .empty-state svg { width: 60px; height: 60px; opacity: 0.2; margin-bottom: 16px; }
   .empty-state p { font-size: 15px; font-weight: 500; }
 
-  @media (max-width: 1100px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 768px) { .sidebar { transform: translateX(-100%); } .main { margin-left: 0; } .form-row { grid-template-columns: 1fr; } .grid-2 { grid-template-columns: 1fr; } .tt-grid { grid-template-columns: 1fr; } }
+  /* ====== HAMBURGER BUTTON ====== */
+  .menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+
+  /* ====== SIDEBAR OVERLAY (mobile) ====== */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(30,39,86,0.45);
+    z-index: 99;
+    backdrop-filter: blur(2px);
+  }
+  .sidebar-overlay.open { display: block; }
+
+  /* ====== RESPONSIVE BREAKPOINTS ====== */
+
+  /* Large tablets / small laptops */
+  @media (max-width: 1200px) {
+    :root { --sidebar-w: 220px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .content { padding: 24px; }
+  }
+
+  /* Tablets */
+  @media (max-width: 1024px) {
+    .topbar { padding: 14px 20px; }
+    .content { padding: 20px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .tt-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* Small tablets / large phones (landscape) */
+  @media (max-width: 768px) {
+    :root { --sidebar-w: 260px; }
+
+    /* Show hamburger */
+    .menu-toggle { display: flex; }
+
+    /* Sidebar: slide out off-screen */
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+      z-index: 200;
+    }
+    .sidebar.open { transform: translateX(0); }
+
+    /* Main fills full width */
+    .main { margin-left: 0; }
+
+    /* Topbar */
+    .topbar { padding: 12px 16px; gap: 10px; }
+    .page-title { font-size: 18px; }
+
+    /* Content */
+    .content { padding: 16px; }
+
+    /* Stats */
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+    .stat-value { font-size: 28px; }
+    .stat-card { padding: 18px; }
+    .stat-icon { width: 40px; height: 40px; border-radius: 12px; margin-bottom: 12px; }
+
+    /* Cards */
+    .card { padding: 18px; }
+
+    /* Forms */
+    .form-row { grid-template-columns: 1fr; gap: 0; }
+    .grid-2 { grid-template-columns: 1fr; gap: 16px; }
+
+    /* Timetable */
+    .tt-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+
+    /* Tables */
+    .table-wrap { border-radius: 8px; -webkit-overflow-scrolling: touch; }
+    td, th { padding: 10px 12px; font-size: 13px; }
+
+    /* Toolbar */
+    .toolbar { gap: 8px; }
+    .search-box { max-width: 100%; flex: 1 1 180px; }
+
+    /* Login */
+    .login-card { width: 92%; padding: 32px 24px; border-radius: 20px; }
+    .login-logo { font-size: 26px; }
+
+    /* Modal */
+    .modal { width: 94%; padding: 24px 20px; border-radius: 16px; }
+
+    /* Toast */
+    #toast { left: 16px; right: 16px; bottom: 16px; }
+    .toast-item { width: 100%; }
+
+    /* Attendance rows */
+    .att-row { flex-wrap: wrap; gap: 8px; }
+    .att-btns { flex-wrap: wrap; }
+
+    /* Buttons in topbar */
+    #topbar-actions .btn { font-size: 13px; padding: 9px 14px; }
+  }
+
+  /* Phones */
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat-card { padding: 14px; }
+    .stat-value { font-size: 24px; }
+    .stat-label { font-size: 11px; }
+    .stat-icon { width: 36px; height: 36px; margin-bottom: 10px; }
+
+    .content { padding: 12px; }
+    .topbar { padding: 10px 12px; }
+    .page-title { font-size: 16px; }
+
+    .card { padding: 14px; border-radius: 12px; }
+    .card-title { font-size: 14px; }
+
+    /* Timetable stacks to 1 col on very small screens */
+    .tt-grid { grid-template-columns: 1fr; }
+
+    /* Login */
+    .login-card { width: 96%; padding: 24px 16px; }
+    .login-logo { font-size: 22px; }
+    .login-sub { font-size: 12px; margin-bottom: 24px; }
+
+    /* Modal */
+    .modal { width: 98%; padding: 20px 16px; }
+    .modal-title { font-size: 17px; margin-bottom: 18px; }
+
+    /* Tables: hide less-important cols */
+    td, th { padding: 8px 10px; font-size: 12px; }
+
+    .btn-sm { padding: 5px 10px; font-size: 11px; }
+
+    /* Topbar actions */
+    #topbar-actions .btn { font-size: 12px; padding: 8px 12px; }
+
+    /* Announcement */
+    .announce-item { padding: 12px; }
+    .announce-title { font-size: 14px; }
+  }
+
+  /* Extra small phones */
+  @media (max-width: 360px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .att-btns { flex-direction: column; }
+  }
 </style>
 </head>
 <body>
@@ -269,8 +422,10 @@
 <!-- APP -->
 <div id="app">
   <div class="layout">
+    <!-- Mobile sidebar overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
     <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div class="sidebar-logo">
         <span>EduCore</span>
         <small>School Management System</small>
@@ -293,8 +448,13 @@
     <!-- MAIN -->
     <main class="main">
       <div class="topbar">
-        <h1 class="page-title" id="page-title">Dashboard</h1>
-        <div id="topbar-actions"></div>
+        <div style="display:flex;align-items:center;gap:12px;min-width:0;">
+          <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="page-title" id="page-title">Dashboard</h1>
+        </div>
+        <div id="topbar-actions" style="flex-shrink:0;"></div>
       </div>
       <div class="content" id="page-content">
         <div class="empty-state"><p>Loading...</p></div>
@@ -354,6 +514,7 @@ async function logout() {
 }
 
 document.getElementById('login-password').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeSidebar(); closeModal(); } });
 
 // ==================== INIT ====================
 async function init() {
@@ -371,6 +532,18 @@ function showApp() {
   document.getElementById('user-role').textContent = currentUser.role;
   buildSidebar();
   navigate('dashboard');
+}
+
+// ==================== SIDEBAR TOGGLE ====================
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
 }
 
 // ==================== NAVIGATION ====================
@@ -427,6 +600,8 @@ function buildSidebar() {
 
 function navigate(page) {
   currentPage = page;
+  // Close sidebar on mobile after navigation
+  if (window.innerWidth <= 768) closeSidebar();
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
   const el = document.getElementById(`nav-${page}`);
   if (el) el.classList.add('active');
